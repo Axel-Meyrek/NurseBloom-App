@@ -9,6 +9,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#1a1c1e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="NurseBloom">
+    <link rel="apple-touch-icon" href="assets/images/icon-192x192.png">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
     <!-- Auth View -->
@@ -112,6 +120,10 @@
                 <div class="menu-item" onclick="window.router.navigate('medications')">
                     <i class="fas fa-pills"></i>
                     <h3>Fármacos</h3>
+                </div>
+                <div id="install-button-container" class="menu-item" style="display: none; background: var(--accent-color); color: white;">
+                    <i class="fas fa-download"></i>
+                    <h3 style="color: white;">Instalar App</h3>
                 </div>
             </div>
 
