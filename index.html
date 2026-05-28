@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nurse Bloom - Portal Educativo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Auth View -->
+    <div id="auth-view" class="view active" style="padding-top: 50px;">
+        <div class="container" style="max-width: 450px;">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h1 style="font-size: 2.5rem; font-weight: 800; color: var(--primary-color);">Nurse<span>Bloom</span></h1>
+                <p style="color: var(--text-muted);">Tu portal educativo de enfermería</p>
+            </div>
+
+            <!-- Login Form -->
+            <div id="login-form" class="card">
+                <h2 style="margin-bottom: 25px; color: var(--primary-color);"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</h2>
+                <form id="form-login" style="display: flex; flex-direction: column; gap: 15px;">
+                    <div class="search-box" style="background: #f8f9fa; border: 1px solid #eee;">
+                        <input type="email" id="login-email" placeholder="Correo electrónico" required>
+                    </div>
+                    <div class="search-box" style="background: #f8f9fa; border: 1px solid #eee;">
+                        <input type="password" id="login-password" placeholder="Contraseña" required>
+                    </div>
+                    <button type="submit" class="menu-item" style="width: 100%; background: var(--primary-color); color: white; align-items: center; border: none; padding: 15px;">
+                        <span style="font-weight: 700;">ENTRAR</span>
+                    </button>
+                    <p style="text-align: center; font-size: 0.9rem; margin-top: 10px;">
+                        ¿No tienes cuenta? <a href="#" onclick="window.authModule.toggleForm('register')" style="color: var(--accent-color); font-weight: 600; text-decoration: none;">Regístrate</a>
+                    </p>
+                </form>
+            </div>
+
+            <!-- Register Form (Hidden by default) -->
+            <div id="register-form" class="card" style="display: none;">
+                <h2 style="margin-bottom: 25px; color: var(--primary-color);"><i class="fas fa-user-plus"></i> Crear Cuenta</h2>
+                <form id="form-register" style="display: flex; flex-direction: column; gap: 15px;">
+                    <div class="search-box" style="background: #f8f9fa; border: 1px solid #eee;">
+                        <input type="text" id="reg-name" placeholder="Nombre completo" required>
+                    </div>
+                    <div class="search-box" style="background: #f8f9fa; border: 1px solid #eee;">
+                        <input type="email" id="reg-email" placeholder="Correo electrónico" required>
+                    </div>
+                    <div class="search-box" style="background: #f8f9fa; border: 1px solid #eee;">
+                        <input type="password" id="reg-password" placeholder="Contraseña" required>
+                    </div>
+                    <button type="submit" class="menu-item" style="width: 100%; background: var(--accent-color); color: white; align-items: center; border: none; padding: 15px;">
+                        <span style="font-weight: 700;">REGISTRARSE</span>
+                    </button>
+                    <p style="text-align: center; font-size: 0.9rem; margin-top: 10px;">
+                        ¿Ya tienes cuenta? <a href="#" onclick="window.authModule.toggleForm('login')" style="color: var(--primary-color); font-weight: 600; text-decoration: none;">Inicia sesión</a>
+                    </p>
+                </form>
+            </div>
+            
+            <div id="auth-error" style="margin-top: 20px; color: var(--error-color); text-align: center; font-weight: 600; font-size: 0.9rem;"></div>
+        </div>
+    </div>
+
+    <!-- Main App Content (Hidden until logged in) -->
+    <div id="app-content" style="display: none;">
+        <header class="top-header">
+        <div class="brand">Nurse<span>Bloom</span></div>
+        <div class="header-status">
+            <div id="header-streak" class="streak-badge"><i class="fas fa-fire"></i> <span id="streak-count">0</span> días</div>
+        </div>
+        <div class="status-icons">
+            <i class="fas fa-sign-out-alt" onclick="window.authModule.logout()" style="cursor: pointer; font-size: 1.4rem; padding: 5px;" title="Cerrar Sesión"></i>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Home View -->
+        <div id="home-view" class="view active">
+            <section id="recommendation">
+                <div class="card">
+                    <h2><i class="fas fa-star"></i> Recomendación</h2>
+                    <p id="recommendation-text" style="font-size: 1.05rem; font-weight: 500; color: #333;">Cargando recomendación...</p>
+                </div>
+            </section>
+
+            <section id="exercise">
+                <div class="card">
+                    <h2><i class="fas fa-tasks"></i> Evaluación Diaria</h2>
+                    <div id="exercise-content">
+                        <p id="exercise-question" style="font-weight: 600; margin-bottom: 15px;">Cargando ejercicio...</p>
+                        <div id="exercise-options" class="options-grid"></div>
+                        <div id="exercise-feedback" class="feedback"></div>
+                        <div style="display: flex; justify-content: flex-start; margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee;">
+                            <div id="exercise-attempts" style="font-size: 0.85rem; color: #6c757d;">Intentos: 3/3</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="grid-menu">
+                <div class="menu-item" onclick="window.router.navigate('formulas')">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Fórmulas</h3>
+                </div>
+                <div class="menu-item" onclick="window.router.navigate('dictionary')">
+                    <i class="fas fa-search"></i>
+                    <h3>Diccionario</h3>
+                </div>
+                <div class="menu-item" onclick="window.router.navigate('medications')">
+                    <i class="fas fa-pills"></i>
+                    <h3>Fármacos</h3>
+                </div>
+            </div>
+
+            <section id="did-you-know">
+                <div class="card" style="border-left: 4px solid var(--accent-color);">
+                    <p id="fact-text" style="font-size: 0.95rem; color: #444; line-height: 1.5; cursor: pointer;" onclick="window.didYouKnowModule.getRandomFact()">Haz clic aquí para aprender algo nuevo hoy.</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Formulas View -->
+        <div id="formulas-view" class="view">
+            <button class="back-btn" onclick="window.router.navigate('home')"><i class="fas fa-chevron-left"></i> Volver</button>
+            <div class="card">
+                <h2><i class="fas fa-calculator"></i> Fórmulas Clínicas</h2>
+                <div id="formulas-list" class="list-container"></div>
+            </div>
+        </div>
+
+        <!-- Formula Detail View (Full Screen) -->
+        <div id="formula-detail-view" class="view">
+            <button class="back-btn" onclick="window.router.navigate('formulas')"><i class="fas fa-chevron-left"></i> Volver al listado</button>
+            <div id="formula-detail-content"></div>
+        </div>
+
+        <!-- Dictionary View -->
+        <div id="dictionary-view" class="view">
+            <button class="back-btn" onclick="window.router.navigate('home')"><i class="fas fa-chevron-left"></i> Volver</button>
+            <div class="card">
+                <h2><i class="fas fa-book"></i> Glosario Médico</h2>
+                <div class="search-box">
+                    <input type="text" id="dictionary-search" placeholder="Buscar término o fármaco...">
+                    <button id="clear-search-btn" style="background: none; border: none; color: var(--text-muted); padding: 0 10px; display: none;"><i class="fas fa-times"></i></button>
+                    <button id="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+                <div id="dictionary-result"></div>
+                
+                <div id="recent-searches" style="margin-top: 30px; display: none;">
+                    <h3 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px;">Búsquedas recientes</h3>
+                    <div id="recent-searches-list" class="list-container" style="flex-direction: column; gap: 16px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Medications View -->
+        <div id="medications-view" class="view">
+            <button class="back-btn" onclick="window.router.navigate('home')"><i class="fas fa-chevron-left"></i> Volver</button>
+            <div class="card">
+                <h2><i class="fas fa-pills"></i> Vademécum Digital</h2>
+                <div class="search-box">
+                    <input type="text" id="meds-search" placeholder="Buscar fármaco o indicación...">
+                    <button id="clear-meds-btn" style="background: none; border: none; color: var(--text-muted); padding: 0 10px; display: none;"><i class="fas fa-times"></i></button>
+                    <button id="meds-search-btn"><i class="fas fa-search"></i></button>
+                </div>
+                <div id="medications-list" class="list-container"></div>
+            </div>
+        </div>
+
+        <!-- Medication Detail View (Full Screen) -->
+        <div id="medication-detail-view" class="view">
+            <button class="back-btn" onclick="window.router.navigate('medications')"><i class="fas fa-chevron-left"></i> Volver al listado</button>
+            <div id="medication-detail-content"></div>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active" onclick="window.router.navigate('home')">
+            <i class="fas fa-th-large"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-item" onclick="window.router.navigate('formulas')">
+            <i class="fas fa-calculator"></i>
+            <span>Cálculos</span>
+        </a>
+        <a href="#" class="nav-item" onclick="window.router.navigate('dictionary')">
+            <i class="fas fa-search"></i>
+            <span>Búsqueda</span>
+        </a>
+        <a href="#" class="nav-item" onclick="window.router.navigate('medications')">
+            <i class="fas fa-pills"></i>
+            <span>Vademécum</span>
+        </a>
+    </nav>
+
+    <div id="details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script type="module" src="assets/js/main.js"></script>
+    </div>
+</body>
+</html>
