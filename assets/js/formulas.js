@@ -48,6 +48,18 @@ export const formulasModule = {
             `;
         }
 
+        let formulaHtml = '';
+        if (formula.formula) {
+            formulaHtml = `
+                <div style="margin-bottom: 25px;">
+                    <h4 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px;">Fórmula Matemática</h4>
+                    <div style="background: #1a1c1e; color: #20c997; padding: 20px; border-radius: 12px; font-family: 'Courier New', Courier, monospace; font-size: 1.1rem; font-weight: 700; text-align: center; border: 1px solid #333; box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);">
+                        ${formula.formula}
+                    </div>
+                </div>
+            `;
+        }
+
         content.innerHTML = `
             <div class="card" style="border-top: 4px solid var(--accent-color);">
                 <div style="margin-bottom: 25px;">
@@ -60,6 +72,8 @@ export const formulasModule = {
                         ${formula.description}
                     </p>
                 </div>
+
+                ${formulaHtml}
 
                 ${classificationHtml}
 

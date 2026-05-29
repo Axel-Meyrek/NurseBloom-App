@@ -3,6 +3,7 @@ export const formulas = [
         id: 1,
         name: "Regla de tres: dosificación de medicamentos",
         description: "Procedimiento matemático para calcular la cantidad exacta de fármaco que se debe administrar, se basa en dosis prescrita.",
+        formula: "(Dosis indicada × Volumen de dilución) / Presentación",
         exercises: [
             {
                 question: "El médico indica 250 mg de Amoxicilina. La presentación es de 500 mg en 5 mL. ¿Cuántos mL administrar?",
@@ -20,6 +21,7 @@ export const formulas = [
         id: 2,
         name: "Cálculo de goteo (Micro goteo)",
         description: "Se utiliza principalmente en el área de pediatría o cuando se requiere una infusión de soluciones muy precisa y lenta.",
+        formula: "Volumen (mL) / Tiempo (horas) = microgotas/min",
         exercises: [
             {
                 question: "Solución salina 100 mL en 4 horas. ¿Cuántas microgotas por minuto?",
@@ -37,6 +39,7 @@ export const formulas = [
         id: 3,
         name: "Cálculo de goteo (Macro goteo)",
         description: "Sirve para determinar cuántas gotas por minuto deben pasar por un equipo de venoclisis para administrar una solución en un tiempo determinado.",
+        formula: "Volumen (mL) / (Tiempo en horas × 3) = gotas/min",
         exercises: [
             {
                 question: "Pasar 1,000 mL de Solución salina en 8 horas. ¿Cuántas gotas por minuto?",
@@ -54,6 +57,7 @@ export const formulas = [
         id: 4,
         name: "Índice de Masa Corporal (IMC)",
         description: "Un indicador simple de la relación entre el peso y la talla que se utiliza para identificar sobrepeso y obesidad.",
+        formula: "Peso (kg) / [Estatura (m)]²",
         classification: [
             { range: "18.5 – 24.9", label: "Peso normal" },
             { range: "25.0 – 29.9", label: "Sobrepeso" },
@@ -77,6 +81,7 @@ export const formulas = [
         id: 5,
         name: "Balance hídrico",
         description: "Cuantificación y comparación de los ingresos y egresos de líquidos de un paciente.",
+        formula: "Total de Ingresos - Total de Egresos",
         exercises: [
             {
                 question: "Paciente con ingresos de 2,000 mL y egresos de 1,500 mL. ¿Cuál es el balance?",
@@ -94,6 +99,7 @@ export const formulas = [
         id: 6,
         name: "Gasto Urinario (diuresis horaria)",
         description: "Evalúa la función renal: mL producidos por kilo de peso en una hora.",
+        formula: "Volumen de orina (mL) / Peso (kg) / Tiempo (horas)",
         classification: [
             { label: "Normal", range: "0.5 a 1 mL/kg/hr" },
             { label: "Oliguria", range: "menor a 0.5 mL/kg/hr" },
@@ -117,6 +123,7 @@ export const formulas = [
         id: 7,
         name: "Presión Arterial Media (PAM)",
         description: "Presión promedio en las arterias durante un ciclo cardíaco completo.",
+        formula: "[Presión Sistólica + (2 × Presión Diastólica)] / 3",
         exercises: [
             {
                 question: "Paciente con TA de 120/80 mmHg. ¿Cuál es la PAM?",
@@ -134,6 +141,7 @@ export const formulas = [
         id: 8,
         name: "Superficie Corporal",
         description: "Usado para dosis específicas (quimioterapias) o ajuste de fluidos en quemados.",
+        formula: "√[(Peso (kg) × Talla (cm)) / 3600]",
         exercises: [
             {
                 question: "Paciente mide 160 cm y pesa 65 kg. ¿Superficie corporal?",
@@ -151,6 +159,7 @@ export const formulas = [
         id: 9,
         name: "Cálculo de pérdidas insensibles",
         description: "Líquido perdido no medible a simple vista (sudor, respiración).",
+        formula: "Peso (kg) × 0.5 × Tiempo (horas)",
         exercises: [
             {
                 question: "Paciente de 60 kg en un turno de 8 horas. ¿Pérdidas?",
@@ -168,6 +177,7 @@ export const formulas = [
         id: 10,
         name: "Conversión de temperatura (C a F)",
         description: "Conversión de grados Celsius a Fahrenheit.",
+        formula: "(°C × 1.8) + 32",
         exercises: [
             {
                 question: "Convertir 39.5°C a Fahrenheit.",
