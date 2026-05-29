@@ -1,9 +1,11 @@
 const CACHE_NAME = 'nursebloom-v1';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/assets/css/style.css',
-  '/assets/js/main.js'
+  './',
+  './index.html',
+  './assets/css/style.css',
+  './assets/js/main.js',
+  './assets/images/icon-192x192.png',
+  './assets/images/icon-512x512.png'
 ];
 
 // Install Event

@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Register Service Worker for PWA
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js')
+            navigator.serviceWorker.register('./sw.js')
                 .then(registration => {
                     console.log('ServiceWorker registration successful with scope: ', registration.scope);
                 })
@@ -54,13 +54,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // PWA Installation Logic
     let deferredPrompt;
     const installBtn = document.getElementById('install-button-container');
+    console.log('PWA Logic initialized. Install button found:', !!installBtn);
 
     // Check if the app is already installed/standalone
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+        console.log('App is running in standalone mode.');
         if (installBtn) installBtn.style.display = 'none';
     }
 
     window.addEventListener('beforeinstallprompt', (e) => {
+        console.log('beforeinstallprompt event fired!');
         // Prevent Chrome 67 and earlier from automatically showing the prompt
         e.preventDefault();
         // Stash the event so it can be triggered later.
