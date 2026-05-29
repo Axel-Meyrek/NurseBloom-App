@@ -54,37 +54,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // PWA Installation Logic
     let deferredPrompt;
     const installBtn = document.getElementById('install-button-container');
-    console.log('PWA Logic initialized. Install button found:', !!installBtn);
+    
+    // Detection for iOS
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
-    // Check if the app is already installed/standalone
-    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-        console.log('App is running in standalone mode.');
+    console.log('PWA Logic initialized. Platform:', isIOS ? 'iOS' : 'Other', 'Standalone:', isStandalone);
+
+    // Show button on iOS if not already installed
+    if (isIOS && !isStandalone) {
+        if (installBtn) installBtn.style.display = 'flex';
+    }
+
+    // Check if the app is already installed/standalone (for non-iOS)
+    if (isStandalone) {
         if (installBtn) installBtn.style.display = 'none';
     }
 
     window.addEventListener('beforeinstallprompt', (e) => {
         console.log('beforeinstallprompt event fired!');
-        // Prevent Chrome 67 and earlier from automatically showing the prompt
         e.preventDefault();
-        // Stash the event so it can be triggered later.
         deferredPrompt = e;
-        // Update UI notify the user they can add to home screen
-        if (installBtn) {
+        if (installBtn && !isStandalone) {
             installBtn.style.display = 'flex';
         }
     });
 
     if (installBtn) {
         installBtn.addEventListener('click', async () => {
+            if (isIOS) {
+                alert('Para instalar NurseBloom en tu iPhone:\n\n1. Pulsa el botón "Compartir" (el icono del cuadrado con una flecha arriba en Safari).\n2. Desliza hacia abajo y selecciona "Añadir a la pantalla de inicio".');
+                return;
+            }
+
             if (!deferredPrompt) return;
-            // Show the prompt
             deferredPrompt.prompt();
-            // Wait for the user to respond to the prompt
             const { outcome } = await deferredPrompt.userChoice;
             console.log(`User response to the install prompt: ${outcome}`);
-            // We've used the prompt, and can't use it again, throw it away
             deferredPrompt = null;
-            // Hide the button
             installBtn.style.display = 'none';
         });
     }
